@@ -1,0 +1,7 @@
+- Se implementa la estructura base del proyecto en src/ (screens, services, types, components, hooks)
+- Se definen los tipos TypeScript: Artesano, Producto y Oferta
+- Se agregan datos de prueba en artesaniaService con artesanos y productos
+- Se desarrolla HomeScreen mostrando productos en FlatList
+- Cada producto incluye imagen, nombre del artesano y precio
+- Se agrega funcionalidad de oferta con confirmación mediante Alert
+- Evidencia funcional del listado de productos dentro de la app
