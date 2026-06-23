@@ -6,15 +6,19 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 
-import { productos, artesanos } from '../services/artesaniaService';
+import { useProductos } from '../hooks/useProductos';
 import { Producto } from '../types';
 
 export default function HomeScreen() {
-  const getArtesano = (artesanoId: number) => {
-    return artesanos.find(a => a.id === artesanoId);
-  };
+
+  const {
+    productos,
+    cargando,
+    getArtesano,
+  } = useProductos();
 
   const handleOfertar = (producto: Producto) => {
     const nuevaOferta = producto.precioActual + 100;
@@ -89,13 +93,26 @@ export default function HomeScreen() {
     );
   };
 
+  if (cargando) {
+    return (
+      <View style={styles.centrado}>
+        <ActivityIndicator
+          size="large"
+          color="#3b82f6"
+        />
+
+        <Text style={styles.cargandoTexto}>
+          Cargando subastas...
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <FlatList
         data={productos}
-        keyExtractor={(item) =>
-          item.id.toString()
-        }
+        keyExtractor={(item) => item.id.toString()}
         renderItem={renderProducto}
         contentContainerStyle={styles.lista}
       />
@@ -107,6 +124,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+  },
+
+  centrado: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+  },
+
+  cargandoTexto: {
+    marginTop: 12,
+    fontSize: 14,
+    color: '#666',
   },
 
   lista: {
