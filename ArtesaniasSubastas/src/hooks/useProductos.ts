@@ -1,63 +1,28 @@
+// src/hooks/useProductos.ts
 import { useState, useEffect } from 'react';
-
-import {
-  productos as productosMock,
-  artesanos
-} from '../services/artesaniaService';
-
-import {
-  Producto,
-  Artesano
-} from '../types';
-
-/*
-  Custom Hook encargado de manejar
-  la carga de productos y la búsqueda
-  de artesanos.
-*/
+import { obtenerProductos, obtenerArtesanos } from '../services/artesaniaService';
+import { Producto, Artesano } from '../types/index';
 
 export function useProductos() {
+  const [productos, setProductos] = useState<Producto[]>([]);
+  const [artesanos, setArtesanos] = useState<Artesano[]>([]);
+  const [cargando, setCargando] = useState<boolean>(true);
 
-  // Estado que almacena la lista de productos
-  const [productos, setProductos] =
-    useState<Producto[]>([]);
-
-  // Estado que indica si la información sigue cargando
-  const [cargando, setCargando] =
-    useState<boolean>(true);
-
-  /*
-    Se ejecuta una sola vez cuando
-    la pantalla se monta.
-  */
   useEffect(() => {
-
-    setProductos(productosMock);
-
-    setCargando(false);
-
+    let activo = true; // evita actualizar estado si el componente se desmonta
+    (async () => {
+      const [prods, arts] = await Promise.all([obtenerProductos(), obtenerArtesanos()]);
+      if (activo) {
+        setProductos(prods);
+        setArtesanos(arts);
+        setCargando(false);
+      }
+    })();
+    return () => { activo = false; };
   }, []);
 
-  /*
-    Busca el artesano asociado
-    a un producto.
-  */
-  const getArtesano = (
-    artesanoId: number
-  ): Artesano | undefined => {
+  const getArtesano = (artesanoId: number): Artesano | undefined =>
+    artesanos.find(a => a.id === artesanoId);
 
-    return artesanos.find(
-      a => a.id === artesanoId
-    );
-  };
-
-  /*
-    Devuelve los datos necesarios
-    para las pantallas.
-  */
-  return {
-    productos,
-    cargando,
-    getArtesano
-  };
+  return { productos, cargando, getArtesano };
 }
