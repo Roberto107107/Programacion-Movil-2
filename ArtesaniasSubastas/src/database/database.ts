@@ -87,3 +87,5 @@ async function sembrarDatos(db: SQLite.SQLiteDatabase): Promise<void> {
     );
   }
 }
+
+//Se exporta la función para obtener la base de datos
