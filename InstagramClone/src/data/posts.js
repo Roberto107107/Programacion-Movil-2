@@ -1,0 +1,32 @@
+export const posts = [
+  {
+    id: "1",
+    username: "roberto_dev",
+    avatar: "https://i.pravatar.cc/150?img=1",
+    image: "https://picsum.photos/600/600?random=1",
+    description: "Disfrutando aprender React Native 🚀",
+    likes: 325,
+    liked: false,
+    saved: false,
+  },
+  {
+    id: "2",
+    username: "expo_js",
+    avatar: "https://i.pravatar.cc/150?img=2",
+    image: "https://picsum.photos/600/600?random=2",
+    description: "Expo SDK 54 funcionando perfectamente 😎",
+    likes: 850,
+    liked: false,
+    saved: false,
+  },
+  {
+    id: "3",
+    username: "mobile_dev",
+    avatar: "https://i.pravatar.cc/150?img=3",
+    image: "https://picsum.photos/600/600?random=3",
+    description: "Programación móvil ❤️",
+    likes: 1090,
+    liked: false,
+    saved: false,
+  },
+];
