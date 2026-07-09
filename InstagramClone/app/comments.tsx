@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
 
-export default function FeedScreen() {
+export default function CommentsScreen() {
   return (
     <View
       style={{
@@ -9,7 +9,7 @@ export default function FeedScreen() {
         alignItems: "center",
       }}
     >
-      <Text>Feed</Text>
+      <Text>Comentarios</Text>
     </View>
   );
 }

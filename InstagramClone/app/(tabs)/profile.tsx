@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
 
-export default function FeedScreen() {
+export default function ProfileScreen() {
   return (
     <View
       style={{
@@ -9,7 +9,7 @@ export default function FeedScreen() {
         alignItems: "center",
       }}
     >
-      <Text>Feed</Text>
+      <Text>Perfil</Text>
     </View>
   );
 }
