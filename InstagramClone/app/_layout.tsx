@@ -1,55 +1,42 @@
-import { Ionicons } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
+import { Stack } from "expo-router";
+import { useEffect } from "react";
 
-export default function TabLayout() {
+import { initDatabase } from "../src/database/database";
+
+export default function RootLayout() {
+
+  useEffect(() => {
+
+    async function loadDatabase(){
+
+      await initDatabase();
+
+    }
+
+    loadDatabase();
+
+  }, []);
+
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-        tabBarShowLabel: false,
-        tabBarActiveTintColor: "#000",
-        tabBarInactiveTintColor: "#777",
-      }}
-    >
-      <Tabs.Screen
-        name="index"
+
+    <Stack>
+
+      <Stack.Screen
+        name="(tabs)"
         options={{
-          title: "Inicio",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" color={color} size={size} />
-          ),
+          headerShown:false
         }}
       />
 
-      <Tabs.Screen
-        name="search"
+      <Stack.Screen
+        name="comments"
         options={{
-          title: "Buscar",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="search" color={color} size={size} />
-          ),
+          title:"Comentarios"
         }}
       />
 
-      <Tabs.Screen
-        name="reels"
-        options={{
-          title: "Reels",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="play-circle-outline" color={color} size={size} />
-          ),
-        }}
-      />
+    </Stack>
 
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Perfil",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person-outline" color={color} size={size} />
-          ),
-        }}
-      />
-    </Tabs>
   );
+
 }

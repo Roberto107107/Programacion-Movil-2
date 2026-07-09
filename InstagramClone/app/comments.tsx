@@ -8,60 +8,69 @@ import {
     View,
 } from "react-native";
 
-export default function CommentsScreen() {
-  const [comment, setComment] = useState("");
+type Comment = {
+  id: number;
+  username: string;
+  comment: string;
+};
 
-  const [comments, setComments] = useState([
+export default function CommentsScreen() {
+  const [comments, setComments] = useState<Comment[]>([
     {
-      id: "1",
-      user: "expo",
-      text: "Excelente publicación 👏",
+      id: 1,
+      username: "roberto",
+      comment: "Excelente publicación 🔥",
     },
     {
-      id: "2",
-      user: "react",
-      text: "Muy buen proyecto 🔥",
+      id: 2,
+      username: "usuario1",
+      comment: "Me gustó mucho.",
     },
   ]);
 
-  const addComment = () => {
-    if (comment.trim() === "") return;
+  const [text, setText] = useState("");
 
-    setComments([
-      ...comments,
-      {
-        id: Date.now().toString(),
-        user: "Tú",
-        text: comment,
-      },
-    ]);
+  function publishComment() {
+    if (text.trim() === "") return;
 
-    setComment("");
-  };
+    const newComment: Comment = {
+      id: Date.now(),
+      username: "Tú",
+      comment: text,
+    };
+
+    setComments([...comments, newComment]);
+    setText("");
+  }
 
   return (
     <View style={styles.container}>
       <FlatList
         data={comments}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <View style={styles.comment}>
-            <Text style={styles.user}>{item.user}</Text>
-            <Text>{item.text}</Text>
+          <View style={styles.commentContainer}>
+            <Text style={styles.username}>
+              {item.username}
+            </Text>
+
+            <Text>{item.comment}</Text>
           </View>
         )}
       />
 
       <View style={styles.footer}>
         <TextInput
-          placeholder="Agregar un comentario..."
+          placeholder="Escribe un comentario..."
+          value={text}
+          onChangeText={setText}
           style={styles.input}
-          value={comment}
-          onChangeText={setComment}
         />
 
-        <TouchableOpacity onPress={addComment}>
-          <Text style={styles.send}>Publicar</Text>
+        <TouchableOpacity onPress={publishComment}>
+          <Text style={styles.button}>
+            Publicar
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -74,23 +83,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 
-  comment: {
+  commentContainer: {
     padding: 15,
     borderBottomWidth: 0.5,
     borderColor: "#ddd",
   },
 
-  user: {
+  username: {
     fontWeight: "bold",
-    marginBottom: 3,
+    marginBottom: 4,
   },
 
   footer: {
     flexDirection: "row",
     alignItems: "center",
+    padding: 10,
     borderTopWidth: 0.5,
     borderColor: "#ddd",
-    padding: 10,
   },
 
   input: {
@@ -102,9 +111,9 @@ const styles = StyleSheet.create({
     height: 40,
   },
 
-  send: {
+  button: {
+    marginLeft: 15,
     color: "#0095F6",
     fontWeight: "bold",
-    marginLeft: 15,
   },
 });

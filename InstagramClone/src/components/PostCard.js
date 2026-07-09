@@ -14,7 +14,7 @@ export default function PostCard({ post }) {
   const [saved, setSaved] = useState(post.saved);
   const [likes, setLikes] = useState(post.likes);
 
-  const toggleLike = () => {
+  function toggleLike() {
     if (liked) {
       setLiked(false);
       setLikes(likes - 1);
@@ -22,100 +22,72 @@ export default function PostCard({ post }) {
       setLiked(true);
       setLikes(likes + 1);
     }
-  };
+  }
 
-  const toggleSave = () => {
+  function toggleSaved() {
     setSaved(!saved);
-  };
+  }
 
   return (
     <View style={styles.container}>
-      {/* Encabezado */}
       <View style={styles.header}>
-        <View style={styles.userInfo}>
-          <Image
-            source={{ uri: post.avatar }}
-            style={styles.avatar}
-          />
-
-          <Text style={styles.username}>
-            {post.username}
-          </Text>
+        <View style={styles.user}>
+          <Image source={{ uri: post.avatar }} style={styles.avatar} />
+          <Text style={styles.username}>{post.username}</Text>
         </View>
 
-        <Ionicons
-          name="ellipsis-horizontal"
-          size={20}
-          color="black"
-        />
+        <Ionicons name="ellipsis-horizontal" size={22} />
       </View>
 
-      {/* Imagen */}
-      <Image
-        source={{ uri: post.image }}
-        style={styles.image}
-      />
+      <Image source={{ uri: post.image }} style={styles.image} />
 
-      {/* Botones */}
       <View style={styles.actions}>
-        <View style={styles.leftActions}>
-          {/* Like */}
+        <View style={styles.left}>
           <TouchableOpacity onPress={toggleLike}>
             <Ionicons
               name={liked ? "heart" : "heart-outline"}
               size={28}
-              color={liked ? "#ED4956" : "black"}
+              color={liked ? "#ED4956" : "#000"}
             />
           </TouchableOpacity>
 
-          {/* Comentarios */}
           <TouchableOpacity
-            onPress={() => router.push("/comments")}
+            onPress={() =>
+              router.push("/comments")
+            }
           >
             <Ionicons
               name="chatbubble-outline"
               size={27}
-              style={styles.iconSpacing}
+              style={styles.space}
             />
           </TouchableOpacity>
 
-          {/* Compartir */}
           <TouchableOpacity>
             <Ionicons
               name="paper-plane-outline"
               size={27}
-              style={styles.iconSpacing}
+              style={styles.space}
             />
           </TouchableOpacity>
         </View>
 
-        {/* Guardar */}
-        <TouchableOpacity onPress={toggleSave}>
+        <TouchableOpacity onPress={toggleSaved}>
           <Ionicons
             name={saved ? "bookmark" : "bookmark-outline"}
             size={27}
-            color="black"
           />
         </TouchableOpacity>
       </View>
 
-      {/* Likes */}
-      <Text style={styles.likes}>
-        {likes} Me gusta
-      </Text>
+      <Text style={styles.likes}>{likes} Me gusta</Text>
 
-      {/* Descripción */}
       <Text style={styles.description}>
-        <Text style={styles.username}>
-          {post.username}{" "}
-        </Text>
+        <Text style={styles.username}>{post.username} </Text>
         {post.description}
       </Text>
 
-      {/* Comentarios */}
-      <TouchableOpacity
-        onPress={() => router.push("/comments")}
-      >
+      <TouchableOpacity onPress={() => router.push("/comments")}>
         <Text style={styles.comments}>
           Ver todos los comentarios
         </Text>
@@ -129,72 +101,54 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     marginBottom: 25,
   },
-
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    padding: 12,
   },
-
-  userInfo: {
+  user: {
     flexDirection: "row",
     alignItems: "center",
   },
-
   avatar: {
     width: 40,
     height: 40,
     borderRadius: 20,
     marginRight: 10,
   },
-
   username: {
     fontWeight: "bold",
-    fontSize: 14,
   },
-
   image: {
     width: "100%",
     height: 420,
-    resizeMode: "cover",
   },
-
   actions: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
     paddingHorizontal: 12,
     paddingVertical: 10,
   },
-
-  leftActions: {
+  left: {
     flexDirection: "row",
     alignItems: "center",
   },
-
-  iconSpacing: {
+  space: {
     marginLeft: 15,
   },
-
   likes: {
     fontWeight: "bold",
-    fontSize: 14,
     marginHorizontal: 12,
   },
-
   description: {
     marginTop: 6,
     marginHorizontal: 12,
-    fontSize: 14,
   },
-
   comments: {
+    color: "#666",
     marginTop: 8,
     marginHorizontal: 12,
     marginBottom: 12,
-    color: "#777",
-    fontSize: 14,
   },
 });
